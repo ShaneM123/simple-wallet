@@ -121,6 +121,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "cmake"
+version = "0.1.45"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eb6210b637171dfba4cda12e579ac6dc73f5165ad56133e5d72ef3131f320855"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "convert_case"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -241,6 +250,37 @@ dependencies = [
  "rand 0.8.4",
  "rustc-hex",
  "static_assertions",
+]
+
+[[package]]
+name = "fltk"
+version = "1.1.5"
+source = "git+https://github.com/fltk-rs/fltk-rs#b9f953e2a8e8970dcaad294b09139b87b38a6e16"
+dependencies = [
+ "bitflags",
+ "fltk-derive",
+ "fltk-sys",
+ "lazy_static",
+ "objc",
+ "raw-window-handle",
+]
+
+[[package]]
+name = "fltk-derive"
+version = "1.1.5"
+source = "git+https://github.com/fltk-rs/fltk-rs#b9f953e2a8e8970dcaad294b09139b87b38a6e16"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "fltk-sys"
+version = "1.1.5"
+source = "git+https://github.com/fltk-rs/fltk-rs#b9f953e2a8e8970dcaad294b09139b87b38a6e16"
+dependencies = [
+ "cmake",
+ "libc",
 ]
 
 [[package]]
@@ -689,6 +729,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "malloc_buf"
+version = "0.0.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "62bb907fe88d54d8d9ce32a3cceab4218ed2f6b7d35617cafe9adf84e43919cb"
+dependencies = [
+ "libc",
+]
+
+[[package]]
 name = "matches"
 version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -763,6 +812,15 @@ checksum = "05499f3756671c15885fee9034446956fff3f243d6077b91e5767df161f766b3"
 dependencies = [
  "hermit-abi",
  "libc",
+]
+
+[[package]]
+name = "objc"
+version = "0.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "915b1b472bc21c53464d6c8461c9d3af805ba1ef837e1cac254428f4a77177b1"
+dependencies = [
+ "malloc_buf",
 ]
 
 [[package]]
@@ -1152,6 +1210,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "raw-window-handle"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0a441a7a6c80ad6473bd4b74ec1c9a4c951794285bf941c2126f607c72e48211"
+dependencies = [
+ "libc",
+]
+
+[[package]]
 name = "redox_syscall"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1392,6 +1459,7 @@ name = "simple-wallet"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "fltk",
  "secp256k1",
  "tiny-keccak",
  "tokio",
