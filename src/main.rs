@@ -1,23 +1,16 @@
-  use secp256k1::{PublicKey, SecretKey, key};
+  use secp256k1::{PublicKey, SecretKey};
 use web3;
   use tokio;
   use web3::types::{Address};
-  use core::panic;
-use std::{collections::HashMap, str::FromStr};
+use std::{ str::FromStr};
   use crate::wallet_lib::{create_txn_object, sign_and_send};
   use anyhow::{Result};
   use fltk::{app, button::Button, enums::CallbackTrigger, frame::Frame, input, prelude::*, window::Window};
 
-
   mod wallet_lib;
-
 
   const URL: &str = "https://eth-ropsten.alchemyapi.io/v2/owrGyNISGOXRtlnncV2XGYZ4a6DvdYi_";
 
-  //todo: handle basic RPC errors,
-  // make it into a library with functions I can call
-  // call those functions from the interface on button clicks
-  // make an interface
 #[derive(Clone,Debug)]
   pub enum WalletMessage{
     NewWallet,
@@ -38,7 +31,7 @@ use std::{collections::HashMap, str::FromStr};
       let mut inp1 = input::Input::new(600, 200, 225, 35, "To: ");
 
       let web3 = wallet_lib::establish_web3_connection(URL)?;
-      let mut accounts = web3.eth().accounts().await?;
+      //let mut accounts = web3.eth().accounts().await?;
       let mut keypairs: Vec<(PublicKey, SecretKey)> = Vec::new();
       wind.end();
       wind.show();
@@ -49,7 +42,6 @@ use std::{collections::HashMap, str::FromStr};
 
     but.emit(s.clone(), WalletMessage::NewWallet);
     but2.emit(s, WalletMessage::Send);
-    // but_dec.emit(s, Message::Decrement);
     
     while app.wait() {
         if let Some(msg) = r.recv() {
@@ -58,8 +50,7 @@ use std::{collections::HashMap, str::FromStr};
                         let (seckey, pubkey) =
       match  wallet_lib::create_keypair() {
         Ok(val) => val,
-        //todo: implement anyhow error handling here
-        Err(e) => unimplemented!(),
+        Err(_e) => unimplemented!(),
       };
                   keypairs.push((pubkey, seckey));
                   frame.set_label(&format!("{} Wallets", keypairs.len()));
@@ -79,47 +70,6 @@ use std::{collections::HashMap, str::FromStr};
         }
     }
      app.run().unwrap();
-    // let (seckey, pubkey) = wallet_lib::create_keypair()?;
-    // println!("public key: {}", pubkey);
-    //
-    //
-    // let to = Address::from_str("0x08302CF8648A961c607e3e7Bd7B7Ec3230c2A6c5").unwrap();
-    // let tx_object = create_txn_object(to, 7)?;
-    //
-    // let result =  sign_and_send(web3,tx_object,seckey).await?;
-
-    //println!("Tx succeeded with hash: {}", result);
 
        Ok(())
     }
-
-
-
-
-  // pub struct FlatButton {
-  //     frm: frame::Frame,
-  // }
-  //
-  // impl FlatButton {
-  //     pub fn new(w: i32, h: i32, title: &str) {
-  //         let w: FlatButton = FlatButton {
-  //             frm: frame::Frame::new(0,0,w,h,titel)
-  //         };
-  //         //todo: move to another function
-  //         w.frm.set_frame(FrameType::RFlatBox);
-  //         w.frm.set_color(Color::Red);
-  //         let mut w_c = w.clone();
-  //         w.frm.handle(Box::new(move |ev| match ev{
-  //             Event::Push => {
-  //                 if w.color() => Color::Green {
-  //                     w_c.set_color(Color::Red);
-  //                 }
-  //                 else {
-  //                     w_c.set_color(Color::Green)
-  //                 }
-  //             },
-  //             _ => false,
-  //         }))
-  //
-  //     }
-  // }
