@@ -20,15 +20,15 @@ use std::{ str::FromStr};
   #[tokio::main]
    async fn main() -> Result<()> {
       let app = app::App::default();
-      let mut wind = Window::default().with_size( 1200, 800).with_label("Simple Wallet");
-      let mut but = Button::new(100, 100, 200, 300, "Create Wallet");
-      let mut but2 = Button::new(600, 300, 100, 35, " SEND ");
+      let mut wind = Window::default().with_size( 500, 800).with_label("Simple Wallet");
+      let mut but = Button::new(195, 450, 110, 40, "Create Wallet");
+      let mut but2 = Button::new(200, 300, 100, 35, " SEND ");
 
       let mut frame = Frame::default()
       .with_size(600, 100)
       .center_of(&wind)
       .with_label("0 Wallets");
-      let mut inp1 = input::Input::new(600, 200, 225, 35, "To: ");
+      let mut inp1 = input::Input::new(200, 200, 225, 35, "To: ");
 
       let web3 = wallet_lib::establish_web3_connection(URL)?;
       //let mut accounts = web3.eth().accounts().await?;
@@ -36,7 +36,7 @@ use std::{ str::FromStr};
       wind.end();
       wind.show();
 
-      inp1.set_value("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+      inp1.set_value("Paste Address Here");
       inp1.set_trigger(CallbackTrigger::Changed);
     let (s, r) = app::channel::<WalletMessage>();
 
