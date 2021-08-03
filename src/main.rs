@@ -5,7 +5,7 @@ use web3;
 use std::{ str::FromStr};
   use crate::wallet_lib::{create_txn_object, sign_and_send};
   use anyhow::{Result};
-  use fltk::{app, button::Button, enums::CallbackTrigger, frame::Frame, input, prelude::*, window::Window};
+  use fltk::{app, button::Button, enums::{CallbackTrigger, Color, Font, FrameType}, frame::Frame, input, prelude::*, window::Window};
 
   mod wallet_lib;
 
@@ -21,15 +21,28 @@ use std::{ str::FromStr};
    async fn main() -> Result<()> {
       let app = app::App::default();
       let mut wind = Window::default().with_size( 500, 800).with_label("Simple Wallet");
-      let mut but = Button::new(195, 450, 110, 40, "Create Wallet");
+      let mut but = Button::new(195, 450, 120, 45, "Create Wallet");
       let mut but2 = Button::new(200, 300, 100, 35, " SEND ");
-
+      let mut inp1 = input::Input::new(200, 200, 225, 35, "To: ");
       let mut frame = Frame::default()
       .with_size(600, 100)
       .center_of(&wind)
       .with_label("0 Wallets");
-      let mut inp1 = input::Input::new(200, 200, 225, 35, "To: ");
 
+      wind.set_color(Color::DarkCyan);
+
+      but.set_color(Color::White);
+      but.set_label_color(Color::DarkMagenta);
+      but.set_label_font(Font::TimesBold);
+      but.set_frame(FrameType::FlatBox);
+      but.clear_visible_focus();
+      
+      but2.set_color(Color::White);
+      but2.set_label_color(Color::DarkMagenta);
+      but2.set_label_font(Font::TimesBold);
+      but2.set_frame(FrameType::RoundedBox);
+      but2.clear_visible_focus();
+    
       let web3 = wallet_lib::establish_web3_connection(URL)?;
       //let mut accounts = web3.eth().accounts().await?;
       let mut keypairs: Vec<(PublicKey, SecretKey)> = Vec::new();
