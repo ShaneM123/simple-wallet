@@ -29,6 +29,10 @@ use std::{ str::FromStr};
       .center_of(&wind)
       .with_label("0 Wallets");
 
+      frame.set_label_color(Color::White);
+      frame.set_label_font(Font::TimesBold);
+      frame.set_label_size(24);
+
       wind.set_color(Color::DarkCyan);
 
       but.set_color(Color::White);
@@ -40,22 +44,26 @@ use std::{ str::FromStr};
       but2.set_color(Color::White);
       but2.set_label_color(Color::DarkMagenta);
       but2.set_label_font(Font::TimesBold);
-      but2.set_frame(FrameType::RoundedBox);
+      but2.set_frame(FrameType::FlatBox);
       but2.clear_visible_focus();
     
-      let web3 = wallet_lib::establish_web3_connection(URL)?;
-      //let mut accounts = web3.eth().accounts().await?;
-      let mut keypairs: Vec<(PublicKey, SecretKey)> = Vec::new();
+      inp1.set_frame(FrameType::FlatBox);
+
       wind.end();
       wind.show();
 
       inp1.set_value("Paste Address Here");
       inp1.set_trigger(CallbackTrigger::Changed);
+
     let (s, r) = app::channel::<WalletMessage>();
 
     but.emit(s.clone(), WalletMessage::NewWallet);
     but2.emit(s, WalletMessage::Send);
     
+
+    let web3 = wallet_lib::establish_web3_connection(URL)?;
+    let mut keypairs: Vec<(PublicKey, SecretKey)> = Vec::new();
+
     while app.wait() {
         if let Some(msg) = r.recv() {
             match msg {
